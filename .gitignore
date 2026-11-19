@@ -1,0 +1,10 @@
+# Runtime data: uploads, clips, exports, SQLite DB, logs and the PRIVATE SIGNING KEY.
+data/
+*.pem
+backend/.venv/
+backend/.pytest_cache/
+__pycache__/
+frontend/node_modules/
+frontend/dist/
+frontend/.env.local
+.DS_Store
