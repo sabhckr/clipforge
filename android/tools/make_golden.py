@@ -74,6 +74,10 @@ def seg_cases() -> list[dict]:
 
     out = []
     for duration, scenes, params, method in cases:
+        # The engine always receives floats (durations come from the prober), so use floats.
+        duration = float(duration)
+        scenes = [float(s) for s in scenes]
+        params = {k: (float(v) if isinstance(v, (int, float)) else v) for k, v in params.items()}
         p = SegmentParams(**params)
         case = {"duration": duration, "scenes": scenes, "method": method,
                 "params": {"target": p.target, "window": p.window, "min_duration": p.min_duration,
