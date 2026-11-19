@@ -127,7 +127,11 @@ class PipelineTest {
         engine.retry(job.id)
         val again = TestSupport.waitForEnd(engine, job.id)
         assertEquals("completed", again.status)
-        assertEquals(5, engine.db.listClips(job.id).size)
+        // 5 s fixed clips over ~26 s: one clip per planned segment, none missing after the retry.
+        val planned = Json.arr(Json.parseObject(again.planJson!!)["segments"])!!.size
+        assertTrue("planned $planned", planned >= 5)
+        assertEquals(planned, engine.db.listClips(job.id).size)
+        assertEquals(planned, again.clipCount)
     }
 
     @Test
