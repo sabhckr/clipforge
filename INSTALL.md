@@ -64,10 +64,17 @@ cd frontend && npm run dev
 **Single-port mode.** Run `npm run build` in `frontend/`. When `frontend/dist` exists, the API
 also serves the UI, so http://127.0.0.1:8710 gives you everything.
 
+## Android app (runs on the phone)
+
+The native app needs no computer: download `CLIPFORGE-1.0.0.apk`, open it on the phone and
+allow the install. See [android/README.md](android/README.md) for installing, using and
+building it.
+
 ## Use from an Android phone (or any device on your Wi-Fi)
 
-The phone does not run CLIPFORGE. Your computer does the processing, and the phone opens the
-app in its browser (Chrome on Android 10+ works). Downloaded clips play natively on the phone.
+This is the alternative to the native app: your computer does the processing, and the phone
+opens the web interface in its browser (Chrome on Android 10+ works). Downloaded clips play
+natively on the phone.
 
 1. On the computer, build the interface once (from the `clipforge` folder):
 

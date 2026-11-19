@@ -1,6 +1,7 @@
 # CLIPFORGE 1.0
 
 [![CI](https://github.com/sabhckr/clipforge/actions/workflows/ci.yml/badge.svg)](https://github.com/sabhckr/clipforge/actions/workflows/ci.yml)
+[![Android](https://github.com/sabhckr/clipforge/actions/workflows/android.yml/badge.svg)](https://github.com/sabhckr/clipforge/actions/workflows/android.yml)
 
 Deterministic video repurposing. CLIPFORGE turns one long video into a set of short clips
 (9:16 vertical by default) using FFmpeg scene detection and fixed rules. Every project gets a
@@ -53,29 +54,32 @@ Windows and Linux setup, configuration and troubleshooting are in [INSTALL.md](I
 
 ## Platform support
 
-CLIPFORGE has two parts. The **server** does all the video processing (Python + FFmpeg). The
-**web interface** is a regular website you open in a browser.
+CLIPFORGE comes in two forms:
 
-| Platform | Run the server | Use the interface | Status |
-|---|---|---|---|
-| macOS (Apple silicon / Intel) | Yes | Yes | Tested locally, plus CI |
-| Linux | Yes | Yes | CI (Ubuntu) |
-| Windows 10/11 | Yes | Yes | CI (Windows Server). Use the PowerShell steps in [INSTALL.md](INSTALL.md); the `scripts/*.sh` helpers are for macOS/Linux |
-| Android 10+ | No (see below) | Yes, in Chrome/Firefox | Phone layout (375 px, Android Chrome UA) tested in browser emulation; not yet tested on a physical device |
-| iOS / iPadOS | No | Yes, in Safari | Same responsive layout; not tested on a device |
+- **Desktop/server app** (Python + FFmpeg, with a web interface you open in a browser).
+- **Native Android app** ([android/](android/README.md)) that does all the processing on the
+  phone itself, offline. It uses the same segmentation rules and the same signed-manifest
+  format, so either one verifies the other's exports.
 
-**Using it from an Android phone.** Run the server on a Mac, Windows PC or Linux machine, then
-open the interface in your phone's browser over your Wi-Fi. The five steps are in
-[INSTALL.md › Use from an Android phone](INSTALL.md#use-from-an-android-phone-or-any-device-on-your-wi-fi).
-From the phone you can upload videos from the gallery, watch progress, preview clips and
-download them or the ZIP. The output (H.264 + AAC MP4, yuv420p) plays natively on Android 10+.
+| Platform | How it runs | Status |
+|---|---|---|
+| macOS (Apple silicon / Intel) | Desktop app | Tested locally, plus CI |
+| Linux | Desktop app | CI (Ubuntu) |
+| Windows 10/11 | Desktop app | CI (Windows Server). Use the PowerShell steps in [INSTALL.md](INSTALL.md); the `scripts/*.sh` helpers are for macOS/Linux |
+| Android 10+ | **Native app (APK)**, fully on the phone | CI: build, unit tests and emulator tests on Android 10 (API 29) and Android 15 (API 35). Not yet tested on a physical phone |
+| Android / iOS browser | Web interface of a desktop app on your Wi-Fi | Phone layout tested in browser emulation ([INSTALL.md](INSTALL.md#use-from-an-android-phone-or-any-device-on-your-wi-fi)) |
+
+### Android app
+
+Download `CLIPFORGE-1.0.0.apk` (Releases, or the **CLIPFORGE-android-apk** artifact of the
+latest [Android workflow run](https://github.com/sabhckr/clipforge/actions/workflows/android.yml)),
+open it on the phone and allow the install. Pick a video from the gallery (or **Share** one to
+CLIPFORGE), and it detects scenes, cuts and renders clips with the phone's own H.264 encoder,
+then signs a manifest. No computer, no upload, and the app has no internet permission.
+Details, differences from the desktop engine and limits: [android/README.md](android/README.md).
 
 Typical Android recordings are HEVC (H.265), portrait with a rotation flag, and AAC stereo.
-They are handled correctly: the server reads them as upright 1080×1920 and produces upright
-clips.
-
-Running the server *on* the phone (for example in Termux, which packages Python and FFmpeg) may
-be possible but is not supported or tested.
+Both apps handle them: they read them as upright and produce upright clips (covered by tests).
 
 ## Pages
 
@@ -110,6 +114,7 @@ CLIPFORGE_EXPORT/
 - [API.md](API.md): HTTP endpoints
 - [SECURITY.md](SECURITY.md): threat model, signing keys, network deployment, provenance limits
 - [TESTING.md](TESTING.md): test suites and what they cover
+- [android/README.md](android/README.md): the native Android app
 
 ## Honest limitations
 

@@ -21,6 +21,8 @@ jobs:
         working-directory: android
     steps:
       - uses: actions/checkout@v4
+      - name: Validate the committed Gradle wrapper
+        uses: gradle/actions/wrapper-validation@v4
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
@@ -59,15 +61,6 @@ jobs:
         with:
           name: CLIPFORGE-android-apk
           path: android/dist/
-      - name: Gradle wrapper files
-        run: gradle --no-daemon wrapper --gradle-version "$GRADLE_VERSION" --distribution-type bin
-      - uses: actions/upload-artifact@v4
-        with:
-          name: gradle-wrapper
-          path: |
-            android/gradlew
-            android/gradlew.bat
-            android/gradle/wrapper/
       - uses: actions/upload-artifact@v4
         if: failure()
         with:
