@@ -64,6 +64,53 @@ cd frontend && npm run dev
 **Single-port mode.** Run `npm run build` in `frontend/`. When `frontend/dist` exists, the API
 also serves the UI, so http://127.0.0.1:8710 gives you everything.
 
+## Use from an Android phone (or any device on your Wi-Fi)
+
+The phone does not run CLIPFORGE. Your computer does the processing, and the phone opens the
+app in its browser (Chrome on Android 10+ works). Downloaded clips play natively on the phone.
+
+1. On the computer, build the interface once (from the `clipforge` folder):
+
+   ```bash
+   cd frontend && npm run build && cd ..
+   ```
+
+2. Create an access token and show it, so you can type it on the phone:
+
+   ```bash
+   export CLIPFORGE_API_TOKEN="$(openssl rand -hex 16)"; echo "$CLIPFORGE_API_TOKEN"
+   ```
+
+   On Windows PowerShell, pick any long random string instead:
+   `$env:CLIPFORGE_API_TOKEN = "<long random string>"`
+
+3. Start the server so other devices on your network can reach it, in the same terminal:
+
+   ```bash
+   cd backend && CLIPFORGE_HOST=0.0.0.0 .venv/bin/python -m clipforge
+   ```
+
+   On Windows: `cd backend; $env:CLIPFORGE_HOST = "0.0.0.0"; .venv\Scripts\python -m clipforge`
+
+   The server refuses to listen on the network without a token. If your OS firewall asks
+   whether Python may accept incoming connections, allow it.
+
+4. Find the computer's local IP address:
+   - macOS: `ipconfig getifaddr en0`
+   - Windows: `ipconfig` (the IPv4 address of your Wi-Fi adapter)
+   - Linux: `hostname -I`
+
+5. On the phone, join the same Wi-Fi, open `http://<computer-ip>:8710` (for example
+   `http://192.168.1.23:8710`), and enter the token when asked.
+
+From the phone you can upload videos from your gallery, follow progress, preview clips and
+download clips or ZIP exports.
+
+**Keep it on your home network.** Over plain `http://` the token is not encrypted, so only use
+this on a network you trust, and never forward the port to the internet. For access away from
+home, install [Tailscale](https://tailscale.com) on both devices and use the computer's
+Tailscale address, or set up HTTPS as described in [SECURITY.md](SECURITY.md).
+
 ## Configuration
 
 Backend settings are environment variables. All are optional.

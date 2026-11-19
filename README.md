@@ -64,11 +64,11 @@ CLIPFORGE has two parts. The **server** does all the video processing (Python + 
 | Android 10+ | No (see below) | Yes, in Chrome/Firefox | Phone layout (375 px, Android Chrome UA) tested in browser emulation; not yet tested on a physical device |
 | iOS / iPadOS | No | Yes, in Safari | Same responsive layout; not tested on a device |
 
-**Using it from an Android phone.** Run the server on a Mac, Windows PC or Linux machine. Open
-the interface from your phone over your private network, with a token and HTTPS as described
-in [SECURITY.md](SECURITY.md#exposing-clipforge-beyond-localhost). From the phone you can upload
-videos from the gallery, watch progress, preview clips and download them or the ZIP. The output
-(H.264 + AAC MP4, yuv420p) plays natively on Android 10+.
+**Using it from an Android phone.** Run the server on a Mac, Windows PC or Linux machine, then
+open the interface in your phone's browser over your Wi-Fi. The five steps are in
+[INSTALL.md › Use from an Android phone](INSTALL.md#use-from-an-android-phone-or-any-device-on-your-wi-fi).
+From the phone you can upload videos from the gallery, watch progress, preview clips and
+download them or the ZIP. The output (H.264 + AAC MP4, yuv420p) plays natively on Android 10+.
 
 Typical Android recordings are HEVC (H.265), portrait with a rotation flag, and AAC stereo.
 They are handled correctly: the server reads them as upright 1080×1920 and produces upright
