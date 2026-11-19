@@ -22,7 +22,17 @@ android {
     }
 
     signingConfigs {
+        // Sign with every scheme: some phone installers reject APKs that carry
+        // only the v2 signature, even though Android itself accepts them.
+        getByName("debug") {
+            enableV1Signing = true
+            enableV2Signing = true
+            enableV3Signing = true
+        }
         create("release") {
+            enableV1Signing = true
+            enableV2Signing = true
+            enableV3Signing = true
             if (releaseKeystore != null) {
                 storeFile = file(releaseKeystore)
                 storeType = "pkcs12"
