@@ -33,7 +33,12 @@ class PipelineTest {
         assertNull(done.error)
 
         val clips = engine.db.listClips(job.id)
-        assertEquals(listOf(0.0 to 8.0, 8.0 to 17.0, 17.0 to 26.0), clips.map { it.start to it.end })
+        val expected = listOf(0.0 to 8.0, 8.0 to 17.0, 17.0 to 26.0)
+        assertEquals("clips: ${clips.map { it.start to it.end }}", 3, clips.size)
+        for ((c, e) in clips.zip(expected)) {
+            assertEquals(e.first, c.start, 0.07) // within one frame of the true cut
+            assertEquals(e.second, c.end, 0.07)
+        }
         assertEquals(listOf("start", "scene", "scene"), clips.map { it.startKind })
         assertEquals(listOf("scene", "scene", "end"), clips.map { it.endKind })
         for (c in clips) {
@@ -51,7 +56,10 @@ class PipelineTest {
 
         val plan = Json.parseObject(done.planJson!!)
         assertEquals("hybrid", plan["method_used"])
-        assertEquals(listOf(8.0, 17.0), plan["scene_boundaries_detected"])
+        val detected = Json.arr(plan["scene_boundaries_detected"])!!.map { (it as Number).toDouble() }
+        assertEquals(2, detected.size)
+        assertEquals(8.0, detected[0], 0.07)
+        assertEquals(17.0, detected[1], 0.07)
         assertEquals(2L, (plan["scene_boundaries_used"] as Number).toLong())
 
         val report = engine.verifyOnDisk(done)

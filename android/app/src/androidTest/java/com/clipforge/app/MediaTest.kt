@@ -55,7 +55,10 @@ class MediaTest {
     fun sceneDetectorFindsTheTwoHardCuts() {
         val f = asset("scenes.mp4")
         val cuts = SceneDetector.detect(f, 0.3, 26.0, { false }) {}
-        assertEquals(listOf(8.0, 17.0), cuts)
+        // Exactly two cuts, each within one frame (1/15 s) of the true cut.
+        assertEquals("cuts were $cuts", 2, cuts.size)
+        assertEquals(8.0, cuts[0], 0.07)
+        assertEquals(17.0, cuts[1], 0.07)
     }
 
     private fun render(name: String, settings: ProcessingSettings, start: Double = 0.0, dur: Double = 3.0): File {

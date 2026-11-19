@@ -8,7 +8,7 @@ TMP="$(mktemp -d)"
 trap 'rm -rf "$TMP"' EXIT
 mkdir -p "$OUT"
 FF=(ffmpeg -hide_banner -loglevel error -y)
-X264=(-c:v libx264 -preset medium -crf 30 -pix_fmt yuv420p -g 30 -bf 2)
+X264=(-c:v libx264 -preset medium -crf 30 -pix_fmt yuv420p -g 30 -bf 0)
 
 # scenes.mp4 — 640x360 @15 fps, 26 s, hard cuts at exactly 8 s and 17 s, AAC tone.
 "${FF[@]}" \
@@ -36,7 +36,7 @@ cp "$TMP/redblue_src.mp4" "$OUT/redblue.mp4"
 "${FF[@]}" \
   -f lavfi -i "testsrc2=size=640x360:rate=15:duration=12" \
   -f lavfi -i "sine=frequency=660:sample_rate=48000:duration=12" \
-  -c:v libx265 -preset fast -crf 32 -pix_fmt yuv420p -tag:v hvc1 -x265-params log-level=error \
+  -c:v libx265 -preset fast -crf 32 -pix_fmt yuv420p -tag:v hvc1 -x265-params log-level=error:bframes=0 \
   -c:a aac -b:a 64k -shortest "$TMP/hevc_coded.mp4"
 "${FF[@]}" -display_rotation:v:0 90 -i "$TMP/hevc_coded.mp4" -c copy "$OUT/phone_hevc.mp4"
 
