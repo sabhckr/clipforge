@@ -57,6 +57,11 @@ jobs:
           cp app/build/outputs/apk/release/app-release.apk dist/CLIPFORGE-1.0.0.apk
           cp app/build/outputs/apk/debug/app-debug.apk dist/CLIPFORGE-1.0.0-debug.apk
           sha256sum dist/*.apk | tee dist/SHA256SUMS.txt
+      - name: Check APK signature and manifest
+        run: |
+          BT="$ANDROID_HOME/build-tools/$(ls "$ANDROID_HOME/build-tools" | sort -V | tail -1)"
+          "$BT/apksigner" verify --verbose --print-certs dist/CLIPFORGE-1.0.0.apk
+          "$BT/aapt2" dump badging dist/CLIPFORGE-1.0.0.apk | grep -E "^(package|sdkVersion|targetSdkVersion|native-code|launchable-activity)"
       - uses: actions/upload-artifact@v4
         with:
           name: CLIPFORGE-android-apk
@@ -69,6 +74,7 @@ jobs:
 
   emulator:
     name: Emulator tests (Android API ${{ matrix.api }})
+    needs: build
     runs-on: ubuntu-latest
     timeout-minutes: 75
     strategy:
@@ -92,7 +98,12 @@ jobs:
       - name: Build app and test APKs
         working-directory: android
         run: gradle --no-daemon assembleDebug assembleDebugAndroidTest
-      - name: Run instrumented tests
+      - name: Download the release APK built above
+        uses: actions/download-artifact@v4
+        with:
+          name: CLIPFORGE-android-apk
+          path: android/dist
+      - name: Install and launch the release APK, then run instrumented tests
         uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: ${{ matrix.api }}
@@ -103,7 +114,14 @@ jobs:
           emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
           disable-animations: true
           working-directory: android
-          script: gradle --no-daemon connectedDebugAndroidTest
+          script: |
+            adb install dist/CLIPFORGE-1.0.0.apk
+            adb shell am start -W -n com.clipforge.app/.MainActivity
+            sleep 10
+            adb shell pidof com.clipforge.app
+            ! adb logcat -d -b crash | grep -q com.clipforge.app
+            adb uninstall com.clipforge.app
+            gradle --no-daemon connectedDebugAndroidTest
       - uses: actions/upload-artifact@v4
         if: always()
         with:
