@@ -1,0 +1,25 @@
+{
+  "zeta": [
+    1,
+    2.5,
+    -0.0,
+    1e-07,
+    1e+16,
+    12345678901234567890,
+    true,
+    false,
+    null
+  ],
+  "alpha": {
+    "nested": {
+      "b": "Café — clip ✓ 🎬",
+      "a": "quote \" backslash \\ tab \t nl \n ctrl \u0001 \u001f"
+    }
+  },
+  "Upper": "keys sort by code point",
+  "émoji": "😀",
+  "num": 0.30000000000000004,
+  "empty_obj": {},
+  "empty_arr": [],
+  "unicode_esc": "  é"
+}

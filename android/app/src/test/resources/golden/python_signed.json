@@ -1,0 +1,79 @@
+{
+  "manifest": {
+    "manifest_version": "1.0",
+    "generator": {
+      "name": "CLIPFORGE",
+      "version": "1.0.0",
+      "ffmpeg": "7.1",
+      "ai_used": false
+    },
+    "project_id": "0b6f3f0e-2d0c-4c3e-9b8a-2f8f9f0d1a11",
+    "project_name": "Golden test — Café ✓",
+    "created_at": "2026-11-19T10:00:00Z",
+    "source": {
+      "asset_id": "src-1",
+      "sha256": "abababababababababababababababababababababababababababababababab",
+      "size_bytes": 123456789,
+      "original_filename": "VID_20261119_🎬.mp4",
+      "ingested_at": "2026-11-19T09:59:00Z",
+      "media": {
+        "container": "mp4",
+        "duration": 95.123,
+        "width": 1080,
+        "height": 1920,
+        "rotation": 90,
+        "fps": 29.97,
+        "video_codec": "hevc",
+        "has_audio": true,
+        "audio_codec": "aac"
+      }
+    },
+    "processing": {
+      "settings": {
+        "target_duration": 30.0,
+        "scene_threshold": 0.3,
+        "overlap": 0.0,
+        "max_duration": null
+      },
+      "segmentation": {
+        "segments": [
+          {
+            "start": 0.0,
+            "end": 27.5
+          },
+          {
+            "start": 27.5,
+            "end": 60.25
+          }
+        ]
+      },
+      "encoder_used": "libx264"
+    },
+    "outputs": [
+      {
+        "asset_id": "clip-1",
+        "index": 1,
+        "path": "clips/clip_0001.mp4",
+        "sha256": "cdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd",
+        "size_bytes": 1000,
+        "source_start": 0.0,
+        "source_end": 27.5,
+        "duration": 27.5,
+        "width": 1080,
+        "height": 1920,
+        "has_audio": true,
+        "boundary": {
+          "start": "start",
+          "end": "scene"
+        }
+      }
+    ]
+  },
+  "signature": {
+    "algorithm": "Ed25519",
+    "canonicalization": "json:sort_keys,separators=(',',':'),utf-8",
+    "key_id": "56475aa75463474c",
+    "public_key_pem": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEAA6EHv/POEL4dcN0Y50vAmWfk1jCbpQ1fHdyGZBJVMbg=\n-----END PUBLIC KEY-----\n",
+    "value": "jdkBxFd7+D75tuXjwfMuqdBNOD+4jexbAZwYuAQFYV60Nxog8pxVlyJOPL5XI/hZOXa+IgCBpM9jKKlKVc3/BQ=="
+  }
+}
