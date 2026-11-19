@@ -60,9 +60,12 @@ jobs:
       - name: Check APK signature and manifest
         run: |
           BT="$ANDROID_HOME/build-tools/$(ls "$ANDROID_HOME/build-tools" | sort -V | tail -1)"
-          "$BT/apksigner" verify --verbose --print-certs dist/CLIPFORGE-1.0.0.apk | tee "$RUNNER_TEMP/sig.txt"
+          # --min-sdk-version 21 makes apksigner check the v1 signature too
+          # (it skips v1/v2 for an APK whose own minSdk is 29).
+          "$BT/apksigner" verify --min-sdk-version 21 --verbose --print-certs dist/CLIPFORGE-1.0.0.apk | tee "$RUNNER_TEMP/sig.txt"
           grep -q "Verified using v1 scheme (JAR signing): true" "$RUNNER_TEMP/sig.txt"
           grep -q "Verified using v2 scheme (APK Signature Scheme v2): true" "$RUNNER_TEMP/sig.txt"
+          grep -q "Verified using v3 scheme (APK Signature Scheme v3): true" "$RUNNER_TEMP/sig.txt"
           "$BT/aapt2" dump badging dist/CLIPFORGE-1.0.0.apk | grep -E "^(package|sdkVersion|targetSdkVersion|native-code|launchable-activity)"
       - uses: actions/upload-artifact@v4
         with:
