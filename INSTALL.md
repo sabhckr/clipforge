@@ -66,8 +66,8 @@ also serves the UI, so http://127.0.0.1:8710 gives you everything.
 
 ## Android app (runs on the phone)
 
-The native app needs no computer: download `CLIPFORGE-1.0.0.apk`, open it on the phone and
-allow the install. See [android/README.md](android/README.md) for installing, using and
+The native app needs no computer: download **[CLIPFORGE-1.0.0.apk](https://github.com/sabhckr/clipforge/releases/latest/download/CLIPFORGE-1.0.0.apk)**, open it on the
+phone and allow the install. See [android/README.md](android/README.md) for installing, using and
 building it.
 
 ## Use from an Android phone (or any device on your Wi-Fi)

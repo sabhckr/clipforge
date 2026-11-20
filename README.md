@@ -2,6 +2,7 @@
 
 [![CI](https://github.com/sabhckr/clipforge/actions/workflows/ci.yml/badge.svg)](https://github.com/sabhckr/clipforge/actions/workflows/ci.yml)
 [![Android](https://github.com/sabhckr/clipforge/actions/workflows/android.yml/badge.svg)](https://github.com/sabhckr/clipforge/actions/workflows/android.yml)
+[![Download APK](https://img.shields.io/github/v/release/sabhckr/clipforge?label=Download%20Android%20APK&logo=android)](https://github.com/sabhckr/clipforge/releases/latest/download/CLIPFORGE-1.0.0.apk)
 
 Deterministic video repurposing. CLIPFORGE turns one long video into a set of short clips
 (9:16 vertical by default) using FFmpeg scene detection and fixed rules. Every project gets a
@@ -71,9 +72,8 @@ CLIPFORGE comes in two forms:
 
 ### Android app
 
-Download `CLIPFORGE-1.0.0.apk` (Releases, or the **CLIPFORGE-android-apk** artifact of the
-latest [Android workflow run](https://github.com/sabhckr/clipforge/actions/workflows/android.yml)),
-open it on the phone and allow the install. Pick a video from the gallery (or **Share** one to
+**[Download CLIPFORGE-1.0.0.apk](https://github.com/sabhckr/clipforge/releases/latest/download/CLIPFORGE-1.0.0.apk)** (Android 10+, about 26 MB; checksums on the
+[release page](https://github.com/sabhckr/clipforge/releases/latest)), open it on the phone and allow the install. Pick a video from the gallery (or **Share** one to
 CLIPFORGE), and it detects scenes, cuts and renders clips with the phone's own H.264 encoder,
 then signs a manifest. No computer, no upload, and the app has no internet permission.
 Details, differences from the desktop engine and limits: [android/README.md](android/README.md).

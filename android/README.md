@@ -10,14 +10,19 @@ SHA-256 hashes and an Ed25519-signed provenance manifest. There is **no AI** in 
 
 ## Install
 
-1. Download `CLIPFORGE-1.0.0.apk`: from the repository's **Releases** page when a release
-   exists, or from the latest successful run of the
+1. Download **[CLIPFORGE-1.0.0.apk](https://github.com/sabhckr/clipforge/releases/latest/download/CLIPFORGE-1.0.0.apk)** (about 26 MB) on the phone. The
+   [release page](https://github.com/sabhckr/clipforge/releases/latest) also has `SHA256SUMS.txt`. Builds of every commit are in the
    [Android workflow](https://github.com/sabhckr/clipforge/actions/workflows/android.yml)
-   (artifact **CLIPFORGE-android-apk**, a ZIP that contains the APK and `SHA256SUMS.txt`).
+   runs (artifact **CLIPFORGE-android-apk**).
 2. Open the APK on the phone. Android asks you to allow installs from that source (your browser
    or file manager). Allow it for this install.
 3. Open **CLIPFORGE**. On Android 13+ it asks for permission to show notifications; this is only
    used for the progress notification while clips render.
+
+**If the phone says "App not installed":** uninstall any older CLIPFORGE first (a build signed
+with a different key cannot install over it), check that the download is about 26 MB (a
+partial download fails the same way), and keep at least 100 MB free. If Play Protect asks, tap
+**More details**, then **Install anyway**.
 
 The APK is self-signed (it is not from the Play Store), so Android shows its usual warning for
 apps from outside the store.
